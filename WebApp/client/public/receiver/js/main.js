@@ -1,17 +1,13 @@
 import { Receiver } from "./receiver.js";
 import { getServerConfig } from "../../js/config.js";
-import { initializeApp } from "../../../../node_modules/firebase/app";
-import { getDatabase } from "../../../../node_modules/firebase/database";
+//import { initializeApp } from '../../../../node_modules/firebase/firebase-app';
+import { initializeApp } from '../../../../node_modules/firebase/app/dist/app';
+//import { initializeApp } from '../../../../node_modules/firebase/app';
+//import { getDatabase } from "firebase/database";
+//import { getDatabase, ref, set } from '../../../../node_modules/firebase/firebase-database';
+//import { getDatabase, ref, set } from '../../../../node_modules/firebase/database';
+import { getDatabase, ref, set } from '../../../../node_modules/firebase/database/dist/database';
 
-const firebaseConfig = {
-  apiKey: "49f389ec2883529493cd1ca9c172721c0ee8d9e1",
-  authDomain: "database-ff04a.firebaseapp.com",
-  databaseURL: "https://database-ff04a-default-rtdb.firebaseio.com",
-  storageBucket: "database-ff04a-default-rtdb.appspot.com",
-};
-
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
 
 setup();
 
@@ -34,6 +30,39 @@ window.addEventListener('beforeunload', async () => {
 }, true);
 
 
+  const firebaseConfig = {
+    apiKey: "AIzaSyCSHWNuatWyVVa7RnpHWdDkDHHgo9WAvoc",
+    authDomain: "webapp-6b214.firebaseapp.com",
+    databaseURL: "https://webapp-6b214-default-rtdb.firebaseio.com",
+    projectId: "webapp-6b214",
+    storageBucket: "webapp-6b214.appspot.com",
+    messagingSenderId: "1040941419260",
+    appId: "1:1040941419260:web:e85a21a3346c028ed76579"
+  };
+
+  const app = initializeApp(firebaseConfig);
+
+  // Get a reference to the database service
+//const database = getDatabase(app);
+
+const db = getDatabase();
+    set(ref(db, 'users/' + userId), {
+      username: name,
+      email: email,
+      profile_picture : imageUrl
+    })
+    .then(() => {
+      alert("data saved successfully")
+      // Data saved successfully!
+    })
+    .catch((error) => {
+      alert("data not saved")
+      // The write failed...
+    });
+  
+
+
+
 async function setup() {
   const res = await getServerConfig();
   useWebSocket = res.useWebSocket;
@@ -43,18 +72,17 @@ async function setup() {
   showSaveButton();
 }
 
-function showSaveButton() {
-
-  let element = document.getElementById('btnSave');
-  element.addEventListener('click', saveData);
+function showSaveButton(){
+  
+    let element=document.getElementById('btnSave');
+    element.addEventListener('click', saveData);
 
 }
 
-function saveData() {
-  let element = document.getElementById('txtScentance');
-  let dbPath = "";
-  console.log(database.database());
-  database.database().ref(dbPath).set({ aa: element.value });
+function saveData(){
+  let element=document.getElementById('txtScentance');
+  alert(db);
+  alert(element.value)
 }
 
 function showWarningIfNeeded(startupMode) {
@@ -138,12 +166,12 @@ function showsubmitButton() {
 
 function onClicksubmitButton() {
 
-
-  const db = getDatabase();
-  set(ref(db, 'users/' + "1"), {
-    username: "Abhinav"
-  });
-
+  
+    const db = getDatabase();
+    set(ref(db, 'users/' + "1"), {
+      username: "Abhinav"
+    });
+    
 }
 async function setupVideoPlayer(elements) {
   const videoPlayer = new Receiver(elements);
