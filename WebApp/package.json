@@ -20,6 +20,7 @@
     "express": "~4.16.4",
     "firebase": "^9.6.1",
     "morgan": "^1.10.0",
+    "package": "^1.0.1",
     "uuid": "^3.4.0",
     "ws": "^7.5.5"
   },
@@ -50,5 +51,12 @@
     "targets": [
       "node10"
     ]
-  }
+  },
+  "main": "jest.config.js",
+  "directories": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }

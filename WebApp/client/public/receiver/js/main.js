@@ -1,12 +1,14 @@
 import { Receiver } from "./receiver.js";
 import { getServerConfig } from "../../js/config.js";
 //import { initializeApp } from '../../../../node_modules/firebase/firebase-app';
-import { initializeApp } from '../../../../node_modules/firebase/app/dist/app';
-//import { initializeApp } from '../../../../node_modules/firebase/app';
+//import { initializeApp } from './firebase/app';
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+  import { getFirestore, doc, getDoc, getDocs, collection } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+  import { getDatabase, ref, set } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js';
 //import { getDatabase } from "firebase/database";
 //import { getDatabase, ref, set } from '../../../../node_modules/firebase/firebase-database';
 //import { getDatabase, ref, set } from '../../../../node_modules/firebase/database';
-import { getDatabase, ref, set } from '../../../../node_modules/firebase/database/dist/database';
+//import { getDatabase, ref, set } from './node_modules/firebase/firebase-database';
 
 
 setup();
@@ -21,9 +23,9 @@ window.document.oncontextmenu = function () {
   return false;     // cancel default menu
 };
 
-window.addEventListener('resize', function () {
-  receiver.resizeVideo();
-}, true);
+// window.addEventListener('resize', function () {
+//   receiver.resizeVideo();
+// }, true);
 
 window.addEventListener('beforeunload', async () => {
   await receiver.stop();
@@ -45,20 +47,29 @@ window.addEventListener('beforeunload', async () => {
   // Get a reference to the database service
 //const database = getDatabase(app);
 
-const db = getDatabase();
-    set(ref(db, 'users/' + userId), {
-      username: name,
-      email: email,
-      profile_picture : imageUrl
-    })
-    .then(() => {
-      alert("data saved successfully")
-      // Data saved successfully!
-    })
-    .catch((error) => {
-      alert("data not saved")
-      // The write failed...
-    });
+// const db = getDatabase();
+//     set(ref(db, 'users/' + userId), {
+//       username: name,
+//       email: email,
+//       profile_picture : imageUrl
+//     })
+//     .then(() => {
+//       alert("data saved successfully")
+//       // Data saved successfully!
+//     })
+//     .catch((error) => {
+//       alert("data not saved")
+//       // The write failed...
+//     });
+
+
+function writeUserData(userId) {
+  const db = getDatabase();
+  set(ref(db), {
+    framedata: document.getElementById("txtScentance").value
+
+      });
+}
   
 
 
@@ -81,8 +92,7 @@ function showSaveButton(){
 
 function saveData(){
   let element=document.getElementById('txtScentance');
-  alert(db);
-  alert(element.value)
+  writeUserData("PJ");
 }
 
 function showWarningIfNeeded(startupMode) {
